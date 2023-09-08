@@ -9,7 +9,7 @@ import ErrorHandler from "../middlewares/error.js";
 
 // for login 
 
-export const login = async (req, res) => {
+export const login = async (req, res,next) => {
 
     try {
         const {
@@ -30,12 +30,11 @@ export const login = async (req, res) => {
     } catch (error) {
         next(error);
     }
-
 };
 
 // for registering  
 
-export const register = async (req, res) => {
+export const register = async (req, res,next) => {
     try {
         const {
             name,
@@ -47,7 +46,6 @@ export const register = async (req, res) => {
         });
 
         if (user) return next(new ErrorHandler("User Already Exist", 400));
-
 
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({
